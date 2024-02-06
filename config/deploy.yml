@@ -1,18 +1,22 @@
 # Name of your application. Used to uniquely configure containers.
-service: my-app
+service: aladin_notifier
 
 # Name of the container image.
-image: user/my-app
+image: malkog/aladin_notifier
 
 # Deploy to these servers.
 servers:
-  - 192.168.0.1
+  web:
+    hosts:
+      - 192.168.56.2
+    options:
+      network: private
 
 # Credentials for your image host.
 registry:
   # Specify the registry server, if you're not using Docker Hub
-  # server: registry.digitalocean.com / ghcr.io / ...
-  username: my-user
+  server: ghcr.io
+  username: malkoG
 
   # Always use an access token rather than real password when possible.
   password:
@@ -20,42 +24,46 @@ registry:
 
 # Inject ENV variables into containers (secrets come from .env).
 # Remember to run `kamal env push` after making changes!
-# env:
-#   clear:
-#     DB_HOST: 192.168.0.2
-#   secret:
-#     - RAILS_MASTER_KEY
+env:
+  clear:
+    DB_HOST: 192.168.56.2
+  secret:
+    - RAILS_MASTER_KEY
+    - POSTGRES_PASSWORD
+    - DB_HOST
 
 # Use a different ssh user than root
-# ssh:
-#   user: app
+ssh:
+  user: vagrant
 
 # Configure builder setup.
-# builder:
-#   args:
-#     RUBY_VERSION: 3.2.0
+builder:
+  multiarch: false
+  args:
+    RUBY_VERSION: 3.1.3
 #   secrets:
-#     - GITHUB_TOKEN
 #   remote:
 #     arch: amd64
-#     host: ssh://app@192.168.0.1
+#     host: ssh://vagrant@192.168.56.2
 
 # Use accessory services (secrets come from .env).
-# accessories:
-#   db:
-#     image: mysql:8.0
-#     host: 192.168.0.2
-#     port: 3306
-#     env:
-#       clear:
-#         MYSQL_ROOT_HOST: '%'
-#       secret:
-#         - MYSQL_ROOT_PASSWORD
-#     files:
-#       - config/mysql/production.cnf:/etc/mysql/my.cnf
-#       - db/production.sql:/docker-entrypoint-initdb.d/setup.sql
-#     directories:
-#       - data:/var/lib/mysql
+accessories:
+  db:
+    image: postgres:15
+    host: 192.168.56.2
+    port: 5432
+    env:
+      clear:
+        POSTGRES_USER: 'aladin_notifier'
+        POSTGRES_DB: 'aladin_notifier_production'
+      secret:
+        - POSTGRES_PASSWORD
+    files:
+      - config/init.sql:/docker-entrypoint-initdb.d/setup.sql
+    directories:
+      - data:/var/lib/postgresql/data
+    options:
+      network: private
 #   redis:
 #     image: redis:7.0
 #     host: 192.168.0.2
@@ -95,3 +103,13 @@ registry:
 # useful for more complex deploy configurations.
 #
 # allow_empty_roles: false
+traefik:
+  options:
+    publish:
+      - "443:443"
+    volume:
+      - "/letsencrypt/acme.json:/letsencrypt/acme.json"
+    network: "private"
+  args:
+    entryPoints.web.address: ":80"
+    entryPoints.websecure.address: ":443"
