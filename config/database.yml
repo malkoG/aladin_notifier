@@ -88,4 +88,5 @@ production:
   <<: *default
   database: aladin_notifier_production
   username: aladin_notifier
-  password: <%= ENV["ALADIN_NOTIFIER_DATABASE_PASSWORD"] %>
+  password: <%= ENV["POSTGRES_PASSWORD"] %>
+  host: <%= ENV["DB_HOST"] %>
