@@ -118,3 +118,8 @@ traefik:
     api.insecure: true
     entryPoints.web.address: ":80"
     entryPoints.websecure.address: ":443"
+    # entryPoints.web.http.redirections.entryPoint.to: websecure # We want to force https
+    # entryPoints.web.http.redirections.entryPoint.scheme: https
+    # certificatesResolvers.letsencrypt.acme.storage: "/letsencrypt/acme.json"
+    # certificatesResolvers.letsencrypt.acme.httpchallenge: true
+    # certificatesResolvers.letsencrypt.acme.httpchallenge.entrypoint: web
