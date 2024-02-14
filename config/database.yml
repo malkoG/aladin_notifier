@@ -77,6 +77,13 @@ test:
 # Read https://guides.rubyonrails.org/configuring.html#configuring-a-database
 # for a full overview on how database connection configuration can be specified.
 #
+staging:
+  <<: *default
+  host: <%= ENV["DB_HOST"] %>
+  database: aladin_notifier_production
+  username: aladin_notifier
+  password: <%= ENV["POSTGRES_PASSWORD"] %>
+
 production:
   <<: *default
   database: aladin_notifier_production

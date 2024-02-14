@@ -9,6 +9,12 @@ servers:
   web:
     hosts:
       - 192.168.56.2
+#     labels:
+#       traefik.http.routers.kodingwarrior_secure.rule: Host(`kodingwarrior.dev`)
+#       traefik.http.routers.kodingwarrior_secure.entrypoints: websecure
+#       traefik.http.routers.kodingwarrior_secure.rule: Host(`kodingwarrior.dev`)
+#       traefik.http.routers.kodingwarrior_secure.tls: true
+#       traefik.http.routers.kodingwarrior_secure.tls.certresolver: letsencrypt
     options:
       network: private
 
@@ -108,8 +114,9 @@ accessories:
 traefik:
   options:
     publish:
-      - "443:443"
       - "8080:8080"
+      - "443:443"
+      - "3000:3000"
     volume:
       - "/letsencrypt/acme.json:/letsencrypt/acme.json"
     network: "private"
