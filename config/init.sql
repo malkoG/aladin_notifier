@@ -1,0 +1,1 @@
+CREATE DATABASE aladin_notifier_production;
