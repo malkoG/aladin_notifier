@@ -71,3 +71,7 @@ end
 gem "httparty", "~> 0.21.0"
 
 gem "good_job", "~> 3.24"
+
+gem "shadcn-ui", "~> 0.0.12"
+
+gem "tailwindcss-rails", "~> 2.3"
