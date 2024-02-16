@@ -1,10 +1,10 @@
 
 <div class="grid grid-cols-3 gap-x-2 gap-y-8">
   <% @books.each do |book| %>
-      <%= render_card title: book.title, subtitle: book.author do %>
-        <div class="px-6">
-          <%= book.description %>
-        </div>
-      <% end %>
+    <%= render_card title: book.title, subtitle: book.author, published_at: book.published_at do %>
+      <div class="px-6">
+        <%= book.description %>
+      </div>
+    <% end %>
   <% end %>
 </div>
