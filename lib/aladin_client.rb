@@ -35,8 +35,7 @@ class AladinClient
     options = { query: }
     result = _get(ITEM_LIST_PATH, options)
     
-    book_entries = result['item']
-    book_entries.map { AladinBookEntry.new(_1) }
+    result['item']
   end 
 
   def item_lookup(item_id)
