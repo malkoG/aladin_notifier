@@ -1,6 +1,11 @@
 <div class="rounded-lg border bg-card text-card-foreground shadow-sm w-[350px] <%= options[:class] %>">
   <% if title || subtitle %>
   <div class="flex flex-col space-y-1.5 p-6 leading-10">
+    <% if options[:published_at].present? %>
+      <div class="pb-0 text-right">
+        출간일 : <%= options[:published_at].to_date.to_s %>
+      </div>
+    <% end %>
     <% if title %>
     <h3 class="text-2xl font-semibold leading-10 tracking-tight"><%= title %></h3>
     <% end %> <% if subtitle %>
