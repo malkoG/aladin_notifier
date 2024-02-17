@@ -35,4 +35,8 @@ class AladinBookEntry < ApplicationRecord
       find_by(isbn13:).present? ||
       find_by(item_id:).present?
   end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["author", "created_at", "description", "id", "id_value", "isbn", "isbn13", "item_id", "link", "published_at", "publisher", "title", "updated_at"]
+  end
 end
