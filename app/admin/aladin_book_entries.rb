@@ -5,7 +5,7 @@ ActiveAdmin.register AladinBookEntry do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :published_at, :item_id, :isbn, :isbn13, :title, :link, :author, :publisher, :description
+  permit_params :published_at, :item_id, :isbn, :isbn13, :title, :link, :author, :publisher, :description, :mastodon_status_id
 
 
   index do 
@@ -23,6 +23,19 @@ ActiveAdmin.register AladinBookEntry do
     end
   end
   
+
+  form do |f|
+    f.inputs "Basic Information" do 
+      f.input :title
+      f.input :description
+    end
+
+    f.inputs "External" do
+      f.input :mastodon_status_id 
+    end
+
+    f.actions
+  end
   member_action :send_notification, method: :put do
     resource.send_notification!
     redirect_to admin_aladin_book_entries_url, notice: "Sent to mastodon!"
