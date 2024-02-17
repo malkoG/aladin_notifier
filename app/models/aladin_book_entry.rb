@@ -48,6 +48,9 @@ class AladinBookEntry < ApplicationRecord
       #{title} (#{author} / #{publisher} / #{published_at} / --대충 가격이 들어갈 자리--) #{link}
     EOF
     
-    status_id = client.create_status(text, visibility: 'unlisted', language: 'ko')
+    mastodon_status = client.create_status(text, visibility: 'unlisted', language: 'ko')
+    mastodon_status_id = mastodon_status.id
+
+    update!(mastodon_status_id:)
   end
 end
