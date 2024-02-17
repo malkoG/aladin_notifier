@@ -9,16 +9,22 @@ ActiveAdmin.register AladinBookEntry do
 
 
   index do 
+    selectable_column
+
     column :title
     column :isbn
     column :author
     column :publisher
     column :link
     column :published_at
+    
+    actions defaults: true, dropdown: true do |resource|
+      item "Send to mastodon", send_notification_admin_aladin_book_entry_path(resource), method: :put
+    end
   end
-
+  
   member_action :send_notification, method: :put do
-    resource.lock!
-    redirect_to resource_path, notice: "Locked!"
+    resource.send_notification!
+    redirect_to admin_aladin_book_entries_url, notice: "Sent to mastodon!"
   end
 end
