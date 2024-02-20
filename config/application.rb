@@ -19,6 +19,17 @@ module AladinNotifier
     config.active_job.queue_adapter = :good_job
 
     config.good_job.execution_mode = :async
+
+    config.good_job.enable_cron = true
+    config.good_job.cron = {
+      automatic_matching: {
+        cron: '0 * * * *',
+        class: 'AladinNotificationBatchJob',
+        args: [],
+        kwargs: {},
+        description: "주기적으로 신간 IT 도서 목록을 조회"
+      }
+    }
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
