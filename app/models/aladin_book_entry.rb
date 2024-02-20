@@ -23,6 +23,8 @@ class AladinBookEntry < ApplicationRecord
       options[key] = value
     end
 
+    options['raw_data'] = raw_data
+
     create!(**options)
   end
 
