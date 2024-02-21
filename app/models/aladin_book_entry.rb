@@ -40,7 +40,18 @@ class AladinBookEntry < ApplicationRecord
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["author", "created_at", "description", "id", "id_value", "isbn", "isbn13", "item_id", "link", "published_at", "publisher", "title", "updated_at"]
+    ["author", "created_at", "description", "id", "id_value", "isbn", "isbn13", "item_id", "link", "published_at", "publisher", "title", "updated_at", "mastodon_status_id"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    []
+  end
+
+  def lookup_status
+    bearer_token = ENV["MASTODON_ACCESS_TOKEN"]
+    client = Mastodon::REST::Client.new(base_url: 'https://social.silicon.moe', bearer_token:)
+
+    client.status(mastodon_status_id)
   end
 
   def send_notification!
