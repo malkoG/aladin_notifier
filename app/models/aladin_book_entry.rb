@@ -14,7 +14,8 @@ class AladinBookEntry < ApplicationRecord
       author: 'author',
       publisher: 'publisher',
 
-      description: 'description'
+      description: 'description',
+      price: 'priceStandard'
     }
 
     options = {}
