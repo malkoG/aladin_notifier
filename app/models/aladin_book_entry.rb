@@ -1,4 +1,6 @@
 class AladinBookEntry < ApplicationRecord
+  include ActionView::Helpers::NumberHelper
+
   def self.import(raw_data)
     return if already_exists?(raw_data)
 
@@ -59,7 +61,7 @@ class AladinBookEntry < ApplicationRecord
     client = Mastodon::REST::Client.new(base_url: 'https://social.silicon.moe', bearer_token:)
 
     text = <<~EOF
-      #{title} (#{author} / #{publisher} / #{published_at} / --대충 가격이 들어갈 자리--) #{link}
+      #{title} (#{author} / #{publisher} / #{published_at} / #{number_with_delimiter(price)}원) #{link}
     EOF
     
     mastodon_status = client.create_status(text, visibility: 'unlisted', language: 'ko')
