@@ -6,6 +6,14 @@ ActiveAdmin.setup do |config|
   #
   config.site_title = "Aladin Notifier"
 
+  config.namespace :admin do |admin|
+    admin.build_menu do |menu|
+      menu.add :label => 'more' do |submenu|
+        submenu.add :label => 'background jobs', :url => '/credential/queues'
+      end
+    end
+  end
+
   # Set the link url for the title. For example, to take
   # users to your main site. Defaults to no link.
   #
