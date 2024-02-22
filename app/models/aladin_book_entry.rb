@@ -42,7 +42,7 @@ class AladinBookEntry < ApplicationRecord
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["author", "created_at", "description", "id", "id_value", "isbn", "isbn13", "item_id", "link", "published_at", "publisher", "title", "updated_at", "mastodon_status_id"]
+    ["author", "created_at", "description", "id", "id_value", "isbn", "isbn13", "item_id", "link", "published_at", "publisher", "title", "updated_at", "mastodon_status_id", "price"]
   end
 
   def self.ransackable_associations(auth_object = nil)

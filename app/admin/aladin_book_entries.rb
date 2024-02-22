@@ -18,6 +18,7 @@ ActiveAdmin.register AladinBookEntry do
     column :link
     column :published_at
     column :mastodon_status_id
+    column :price
     
     actions defaults: true, dropdown: true do |resource|
       item "Send to mastodon", send_notification_admin_aladin_book_entry_path(resource), method: :put
