@@ -14,15 +14,6 @@ ENV RAILS_ENV="production" \
     BUNDLE_PATH="/usr/local/bundle" \
     BUNDLE_WITHOUT="development" 
 
-
-RUN --mount=type=secret,id=MASTODON_ACCESS_TOKEN \
-    export MASTODON_ACCESS_TOKEN=$(cat /run/secrets/MASTODON_ACCESS_TOKEN) 
-
-RUN --mount=type=secret,id=ALADIN_TTB_KEY \
-    export ALADIN_TTB_KEY=$(cat /run/secrets/ALADIN_TTB_KEY) 
-
-
-
 # Throw-away build stage to reduce size of final image
 FROM base as build
 
@@ -67,16 +58,21 @@ RUN useradd rails --create-home --shell /bin/bash && \
 
 USER rails:rails
 
+ARG RAILS_MASTER_KEY
+ARG DB_HOST
+ARG MASTODON_ACCESS_TOKEN 
+ARG ALADIN_TTB_KEY
+ARG POSTGRES_PASSWORD
+
+ENV RAILS_MASTER_KEY=$RAILS_MASTER_KEY
+ENV DB_HOST=$DB_HOST
+ENV MASTODON_ACCESS_TOKEN=$MASTODON_ACCESS_TOKEN
+ENV ALADIN_TTB_KEY=$ALADIN_TTB_KEY
+ENV POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+
+RUN echo $RAILS_MASTER_KEY
+
 # Entrypoint prepares the database.
-RUN --mount=type=secret,id=POSTGRES_PASSWORD \
-    export POSTGRES_PASSWORD=$(cat /run/secrets/POSTGRES_PASSWORD)
-
-RUN --mount=type=secret,id=DB_HOST \
-	export DB_HOST=$(cat /run/secrets/DB_HOST)
-
-RUN --mount=type=secret,id=RAILS_MASTER_KEY \
-    export RAILS_MASTER_KEY=$(cat /run/secrets/RAILS_MASTER_KEY) 
-
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime

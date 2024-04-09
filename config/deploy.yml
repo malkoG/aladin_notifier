@@ -49,12 +49,12 @@ builder:
   multiarch: false
   # args:
   #   RUBY_VERSION: 3.1.3
-  secrets:
-    - POSTGRES_PASSWORD 
-    - ALADIN_TTB_KEY
-    - MASTODON_ACCESS_TOKEN
-    - RAILS_MASTER_KEY
-    - DB_HOST
+#  secrets:
+#    - POSTGRES_PASSWORD 
+#    - ALADIN_TTB_KEY
+#    - MASTODON_ACCESS_TOKEN
+#    - RAILS_MASTER_KEY
+#    - DB_HOST
 
 # Use accessory services (secrets come from .env).
 accessories:

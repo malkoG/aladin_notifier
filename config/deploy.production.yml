@@ -32,7 +32,7 @@ registry:
 # Remember to run `kamal env push` after making changes!
 env:
   clear:
-    DB_HOST: feed.kodingwarrior.dev
+    DB_HOST: <%= ENV['DB_HOST'] %>
   secret:
     - RAILS_MASTER_KEY
     - ALADIN_TTB_KEY
@@ -47,20 +47,19 @@ ssh:
 # Configure builder setup.
 builder:
   multiarch: false
-  # args:
-  #   RUBY_VERSION: 3.1.3
-  secrets:
-    - ALADIN_TTB_KEY
-    - MASTODON_ACCESS_TOKEN
-    - POSTGRES_PASSWORD 
-    - RAILS_MASTER_KEY
-    - DB_HOST
+  args:
+    RUBY_VERSION: 3.1.3
+    ALADIN_TTB_KEY: <%= ENV['ALADIN_TTB_KEY'] %>
+    MASTODON_ACCESS_TOKEN: <%= ENV['MASTODON_ACCESS_TOKEN'] %>
+    POSTGRES_PASSWORD: <%= ENV['POSTGRES_PASSWORD'] %>
+    RAILS_MASTER_KEY: <%= ENV['RAILS_MASTER_KEY'] %>
+    DB_HOST: <%= ENV['DB_HOST'] %>
 
 # Use accessory services (secrets come from .env).
 accessories:
   db:
     image: postgres:15
-    host: feed.kodingwarrior.dev
+    host: <%= ENV['DB_HOST'] %>
     port: 5432
     env:
       clear:
