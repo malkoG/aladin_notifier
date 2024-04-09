@@ -1,0 +1,24 @@
+#!/usr/bin/ruby
+
+subcommand = ARGV.pop
+
+def kamal_command(command)
+  system("#{command} -d production")
+end
+
+case subcommand
+when 's'
+  kamal_command("kamal app start")
+when 'start'
+  kamal_command("kamal app start")
+when 'c'
+  kamal_command("kamal app exec -i  'bin/rails c'")
+when 'console'
+  kamal_command("kamal app exec -i  'bin/rails c'")
+when 'deploy'
+  kamal_command("kamal deploy")
+when 'logs'
+  kamal_command("kamal app logs")
+else
+  puts "Unknown subcommand: #{subcommand}"
+end
