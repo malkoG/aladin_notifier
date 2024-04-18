@@ -11,5 +11,6 @@ class AladinNotificationBatchJob < ApplicationJob
       .select(&:present?)
       .select { _1.mastodon_status_id.empty? }
       .reject(&:censorable?)
+      .each(&:send_notification!)
   end
 end
