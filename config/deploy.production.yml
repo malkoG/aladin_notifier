@@ -77,10 +77,10 @@ accessories:
 asset_path: /rails/public/assets
 
 # Configure custom arguments for Traefik
-# traefik:
-#   args:
-#     accesslog: true
-#     accesslog.format: json
+traefik:
+  args:
+    accesslog: true
+    accesslog.format: json
 
 # Configure a custom healthcheck (default is /up on port 3000)
 # healthcheck:
@@ -117,26 +117,27 @@ traefik:
       - "443:443"
       - "3000:3000"
     volume:
-      - "/letsencrypt/acme.json:/letsencrypt/acme.json"
+      - "/letsencrypt:/letsencrypt"
     network: "private"
   args:
     api.dashboard: true
     api.insecure: true
-    entryPoints:
-      web:
-        http: 
-          redirections:
-            entryPoint:
-              to: websecure
-              scheme: https
-              permanent: true
-        address: ":80"
-      websecure:
-        address: ":443"
-    certificatesResolvers:
-      letsencrypt:
-        acme:
-          email: "rijgndqw012@gmail.com"
-          storage: "/letsencrypt/acme.json"
-          httpChallenge:
-            entryPoint: websecure
+    entryPoints.web.address: ":80"
+    entryPoints.websecure.address: ":443"
+    # entryPoints.web.http.redirections.entryPoint.to: websecure
+    # entryPoints.web.http.redirections.entryPoint.scheme: https
+    # entryPoints.web.http.redirections.entrypoint.permanent: true
+    certificatesResolvers.letsencrypt.acme.email: "rijgndqw012@gmail.com"
+    certificatesResolvers.letsencrypt.acme.storage: "/letsencrypt/acme.json"
+    certificatesResolvers.letsencrypt.acme.tlschallenge: true
+    certificatesResolvers.letsencrypt.acme.httpchallenge: true
+    certificatesResolvers.letsencrypt.acme.httpchallenge.entrypoint: web
+  labels:
+    traefik.enable: true
+    traefik.http.routers.catchall.entrypoints: websecure
+    traefik.http.routers.catchall.rule: HostRegexp(`{host:.+}`)
+    traefik.http.routers.catchall.service: noop@internal
+    traefik.http.routers.catchall.priority: 1
+    traefik.http.routers.dashboard.rule: Host(`feed.kodingwarrior.dev`) && (PathPrefix(`/api`) || PathPrefix(`/dashboard`))
+    traefik.http.routers.dashboard.service: api@internal
+    traefik.http.routers.dashboard.middlewares: auth
