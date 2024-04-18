@@ -56,6 +56,10 @@ class AladinBookEntry < ApplicationRecord
     client.status(mastodon_status_id)
   end
 
+  def censorable?
+    %w[스마트폰 ITQ 정보통신 파워포인트 GTQ 활용능력 정보처리기사 산업기사 기능사].map { title.include?(_1) }.any?
+  end
+
   def send_notification!
     bearer_token = ENV["MASTODON_ACCESS_TOKEN"]
     client = Mastodon::REST::Client.new(base_url: 'https://social.silicon.moe', bearer_token:)

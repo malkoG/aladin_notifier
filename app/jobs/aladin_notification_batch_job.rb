@@ -5,6 +5,11 @@ class AladinNotificationBatchJob < ApplicationJob
     client = AladinClient.new
     item_list = client.item_list
 
-    item_list.map { AladinBookEntry.import(_1) }
+    aladin_book_entries = item_list.map { AladinBookEntry.import(_1) }
+
+    aladin_book_entries
+      .select(&:present?)
+      .select { _1.mastodon_status_id.empty? }
+      .reject(&:censorable?)
   end
 end
