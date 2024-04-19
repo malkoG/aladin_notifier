@@ -39,6 +39,8 @@ env:
     - MASTODON_ACCESS_TOKEN
     - POSTGRES_PASSWORD
     - DB_HOST
+    - ALADIN_TELEGRAM_BOT_TOKEN
+    - ALADIN_TELEGRAM_CHANNEL_ID
 
 # Use a different ssh user than root
 ssh:
@@ -54,6 +56,8 @@ builder:
     POSTGRES_PASSWORD: <%= ENV['POSTGRES_PASSWORD'] %>
     RAILS_MASTER_KEY: <%= ENV['RAILS_MASTER_KEY'] %>
     DB_HOST: <%= ENV['DB_HOST'] %>
+    ALADIN_TELEGRAM_BOT_TOKEN: <%= ENV["ALADIN_TELEGRAM_BOT_TOKEN"] %>
+    ALADIN_TELEGRAM_CHANNEL_ID: <%= ENV["ALADIN_TELEGRAM_CHANNEL_ID"] %>
 
 # Use accessory services (secrets come from .env).
 accessories:
