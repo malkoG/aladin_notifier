@@ -71,6 +71,8 @@ class AladinBookEntry < ApplicationRecord
     mastodon_status = client.create_status(text, visibility: 'unlisted', language: 'ko')
     mastodon_status_id = mastodon_status.id
 
+    Bots::TelegramBot.send_message(text)
+
     update!(mastodon_status_id:)
   end
 end
