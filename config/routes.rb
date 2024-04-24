@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   end
 
   resources :books
+  resources :url_aliases, as: :shortened_redirections, path: :r, param: :hash, only: :show
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.
