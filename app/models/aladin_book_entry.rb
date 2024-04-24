@@ -61,17 +61,26 @@ class AladinBookEntry < ApplicationRecord
   end
 
   def send_notification!
-    bearer_token = ENV["MASTODON_ACCESS_TOKEN"]
-    client = Mastodon::REST::Client.new(base_url: 'https://social.silicon.moe', bearer_token:)
-
     text = <<~EOF
       #{title} (#{author} / #{publisher} / #{published_at} / #{number_with_delimiter(price)}원) #{link}
     EOF
-    
+
+    _send_mastodon_notification!(text)
+    _send_telegram_notification!(text)
+  end
+
+  private 
+
+  def _send_telegram_notification!(text)
+    Bots::TelegramBot.send_message(text)
+  end
+
+  def _send_mastodon_notification!(text)
+    bearer_token = ENV["MASTODON_ACCESS_TOKEN"]
+    client = Mastodon::REST::Client.new(base_url: 'https://social.silicon.moe', bearer_token:)
+
     mastodon_status = client.create_status(text, visibility: 'unlisted', language: 'ko')
     mastodon_status_id = mastodon_status.id
-
-    Bots::TelegramBot.send_message(text)
 
     update!(mastodon_status_id:)
   end
