@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_02_21_011414) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_24_220201) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -138,6 +138,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_02_21_011414) do
     t.index ["priority", "created_at"], name: "index_good_jobs_jobs_on_priority_created_at_when_unfinished", order: { priority: "DESC NULLS LAST" }, where: "(finished_at IS NULL)"
     t.index ["queue_name", "scheduled_at"], name: "index_good_jobs_on_queue_name_and_scheduled_at", where: "(finished_at IS NULL)"
     t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
+  end
+
+  create_table "url_aliases", force: :cascade do |t|
+    t.string "short"
+    t.string "long"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["long"], name: "index_url_aliases_on_long", unique: true
+    t.index ["short"], name: "index_url_aliases_on_short", unique: true
   end
 
 end
