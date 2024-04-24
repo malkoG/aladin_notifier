@@ -61,6 +61,8 @@ class AladinBookEntry < ApplicationRecord
   end
 
   def send_notification!
+    return if Rails.env.development?
+
     text = <<~EOF
       #{title} (#{author} / #{publisher} / #{published_at} / #{number_with_delimiter(price)}원) #{link}
     EOF
