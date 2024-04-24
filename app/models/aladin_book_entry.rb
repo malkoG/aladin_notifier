@@ -1,5 +1,6 @@
 class AladinBookEntry < ApplicationRecord
   include ActionView::Helpers::NumberHelper
+  include Rails.application.routes.url_helpers
 
   def self.import(raw_data)
     return if already_exists?(raw_data)
@@ -61,10 +62,15 @@ class AladinBookEntry < ApplicationRecord
   end
 
   def send_notification!
+    hash = _shorten_url(link)
+    url = shortened_redirection_url(hash)
+
     return if Rails.env.development?
 
     text = <<~EOF
-      #{title} (#{author} / #{publisher} / #{published_at} / #{number_with_delimiter(price)}원) #{link}
+      #{title} (#{author} / #{publisher} / #{published_at} / #{number_with_delimiter(price)}원) #{url}
+
+      #{link}
     EOF
 
     _send_mastodon_notification!(text)
@@ -72,6 +78,14 @@ class AladinBookEntry < ApplicationRecord
   end
 
   private 
+
+  def _shorten_url(url)
+    url_alias = UrlAlias.find_by(long: url)
+    return url_alias.short if url_alias.present?
+
+    url_alias = UrlAlias.shorten_url(url)
+    url_alias.short
+  end
 
   def _send_telegram_notification!(text)
     Bots::TelegramBot.send_message(text)
