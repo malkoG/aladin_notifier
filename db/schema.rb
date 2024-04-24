@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_24_220201) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_24_230354) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -138,6 +138,20 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_24_220201) do
     t.index ["priority", "created_at"], name: "index_good_jobs_jobs_on_priority_created_at_when_unfinished", order: { priority: "DESC NULLS LAST" }, where: "(finished_at IS NULL)"
     t.index ["queue_name", "scheduled_at"], name: "index_good_jobs_on_queue_name_and_scheduled_at", where: "(finished_at IS NULL)"
     t.index ["scheduled_at"], name: "index_good_jobs_on_scheduled_at", where: "(finished_at IS NULL)"
+  end
+
+  create_table "metrics", force: :cascade do |t|
+    t.string "target_type", null: false
+    t.bigint "target_id", null: false
+    t.date "date"
+    t.string "metric_type"
+    t.integer "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["date"], name: "index_metrics_on_date"
+    t.index ["metric_type"], name: "index_metrics_on_metric_type"
+    t.index ["target_id", "target_type", "date", "metric_type"], name: "idx_on_target_id_target_type_date_metric_type_717bb18bec"
+    t.index ["target_type", "target_id"], name: "index_metrics_on_target"
   end
 
   create_table "url_aliases", force: :cascade do |t|
