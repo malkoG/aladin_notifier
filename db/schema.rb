@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_24_230354) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_03_151510) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -148,6 +148,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_24_230354) do
     t.integer "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "resource", default: ""
     t.index ["date"], name: "index_metrics_on_date"
     t.index ["metric_type"], name: "index_metrics_on_metric_type"
     t.index ["target_id", "target_type", "date", "metric_type"], name: "idx_on_target_id_target_type_date_metric_type_717bb18bec"
@@ -159,6 +160,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_24_230354) do
     t.string "long"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "resource", default: ""
     t.index ["long"], name: "index_url_aliases_on_long", unique: true
     t.index ["short"], name: "index_url_aliases_on_short", unique: true
   end

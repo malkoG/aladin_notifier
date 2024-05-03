@@ -6,6 +6,7 @@ class UrlAlias < ApplicationRecord
   end
 
   def self.shorten_url(url)
+  def self.shorten_url(url, resource: '')
     short = ''
 
     while true
@@ -15,6 +16,6 @@ class UrlAlias < ApplicationRecord
       break instance.nil?
     end
 
-    create!(short:, long: url)
+    create!(short:, long: url, resource:)
   end
 end

@@ -83,7 +83,7 @@ class AladinBookEntry < ApplicationRecord
     url_alias = UrlAlias.find_by(long: url)
     return url_alias.short if url_alias.present?
 
-    url_alias = UrlAlias.shorten_url(url)
+    url_alias = UrlAlias.shorten_url(url, resource: 'AladinBookEntry')
     url_alias.short
   end
 
