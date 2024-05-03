@@ -2,7 +2,7 @@ class Metric < ApplicationRecord
   belongs_to :target, polymorphic: true
 
   def self.ransackable_attributes(auth_object = nil)
-    %w[target_type target_id resource date]
+    %w[target_type target_id resource metric_type date]
   end
 
   def self.ransackable_associations(auth_object = nil)
