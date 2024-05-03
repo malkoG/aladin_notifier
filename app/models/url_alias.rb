@@ -1,6 +1,8 @@
 require "securerandom"
 
 class UrlAlias < ApplicationRecord
+  include ActionView::Helpers::UrlHelper
+
   def self.generate_hash
     SecureRandom.alphanumeric(6)
   end
@@ -11,6 +13,19 @@ class UrlAlias < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     %w[]
+  end
+
+  def humanized_link
+    case resource 
+    when 'AladinBookEntry'
+      book_entry = AladinBookEntry.find_by(link: long)
+      link_to (book_entry&.link || '') do
+        "#{book_entry&.title} / #{book_entry&.author}"
+      end
+    else
+      content_tag :div do
+      end
+    end
   end
 
   def self.shorten_url(url, resource: '')
