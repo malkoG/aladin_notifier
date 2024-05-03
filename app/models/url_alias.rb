@@ -5,7 +5,14 @@ class UrlAlias < ApplicationRecord
     SecureRandom.alphanumeric(6)
   end
 
-  def self.shorten_url(url)
+  def self.ransackable_attributes(auth_object = nil)
+    %w[short long resource]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[]
+  end
+
   def self.shorten_url(url, resource: '')
     short = ''
 
