@@ -67,6 +67,9 @@ group :development do
   # gem "spring"
 
   gem "error_highlight", ">= 0.4.0", platforms: [:ruby]
+
+  gem "ruby-lsp", "~> 0.22.1"
+  gem "ruby-lsp-rails", "~> 0.3.27"
 end
 
 group :test do
@@ -90,3 +93,4 @@ gem "devise", "~> 4.9"
 gem "sassc-rails", "~> 2.1"
 
 gem 'telegram-bot-ruby', '~> 1.0'
+
