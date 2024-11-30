@@ -1,0 +1,14 @@
+# Tmuxinator configuration for Team Milestone's paldo Application
+name: curation-lab
+root: .
+
+windows:
+  - editor:
+      layout: main-vertical
+      panes:
+        - export NEOVIM_THEME=tokyonight && export RUBY_LSP_LOCAL=true && export JAVASCRIPT_ENABLED=true && vim .
+  - debugging:
+      layout: main-vertical
+      panes:
+        - devcontainer exec --workspace-folder=. bin/rails tailwindcss:watch
+        - devcontainer exec --workspace-folder=. bin/rails c
