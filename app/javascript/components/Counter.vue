@@ -1,21 +1,20 @@
 <template>
-  <div>
-    <p>Counter: {{ count }}</p>
-    <button @click="increment">Increment</button>
-  </div>
+	<div>
+		<p>Counter: {{ count }}</p>
+		<button @click="increment">Increment</button>
+	</div>
 </template>
 
-<script>
+<script setup lang="ts">
+
 import { ref } from 'vue';
 
-export default {
-  setup() {
-    const count = ref(0);
-    const increment = () => {
-      count.value++;
-    };
+const count = ref(0);
 
-    return { count, increment };
-  },
-};
+const increment = () => {
+	count.value++;
+}
+
+console.log('Counter component loaded');
+
 </script>
