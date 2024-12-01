@@ -16,6 +16,7 @@ services:
       - postgres
     networks:
       - backend
+    command: sleep infinity
 
   postgres:
     image: postgres:16
