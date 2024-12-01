@@ -50,7 +50,7 @@ ssh:
 builder:
   multiarch: false
   args:
-    RUBY_VERSION: 3.1.3
+    RUBY_VERSION: 3.3.6
     ALADIN_TTB_KEY: <%= ENV['ALADIN_TTB_KEY'] %>
     MASTODON_ACCESS_TOKEN: <%= ENV['MASTODON_ACCESS_TOKEN'] %>
     POSTGRES_PASSWORD: <%= ENV['POSTGRES_PASSWORD'] %>
