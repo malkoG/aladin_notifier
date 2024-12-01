@@ -94,3 +94,5 @@ gem "sassc-rails", "~> 2.1"
 
 gem 'telegram-bot-ruby', '~> 1.0'
 
+
+gem "vite_rails", "~> 3.0"
