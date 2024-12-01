@@ -3,24 +3,34 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
+      args:
+        RAILS_ENV: development
+        DB_HOST: postgres
+        POSTGRES_PASSWORD: postgres
     volumes:
-      - .:/workspace
+      - .:/rails
     ports:
       - "3000:3000"
-    environment:
-      RAILS_ENV: development
-      DB_HOST: db
     depends_on:
-      - db
+      - postgres
+    networks:
+      - backend
 
-  db:
-    image: postgres:13
+  postgres:
+    image: postgres:16
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: aladin_notifier_development
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - aladin_pgdata:/var/lib/postgresql/data
+    networks:
+      - backend
 
 volumes:
-  pgdata:
+  aladin_pgdata:
+
+networks:
+  backend:
+    driver: bridge
