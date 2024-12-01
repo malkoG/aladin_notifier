@@ -1,0 +1,15 @@
+{
+    "name": "Rails Dev Container",
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "app",
+    "workspaceFolder": "/workspace",
+    "extensions": [
+        "rebornix.ruby",
+        "castwide.solargraph",
+        "ms-vscode-remote.remote-containers"
+    ],
+    "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash"
+    },
+    "postCreateCommand": "bundle install"
+}
