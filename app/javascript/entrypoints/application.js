@@ -29,8 +29,11 @@ import { createApp } from 'vue';
 import Counter from '@/components/Counter.vue';
 
 document.addEventListener('DOMContentLoaded', () => {
-	const app = createApp({});
-	app.component('Counter', Counter);
+	const app = createApp({
+		components: {
+			Counter,
+		}
+	});
 	app.mount('#vue-app');
 	console.log('Vue app mounted');
 });
