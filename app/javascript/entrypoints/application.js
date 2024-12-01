@@ -25,4 +25,12 @@ console.log('Visit the guide for more information: ', 'https://vite-ruby.netlify
 // const channels = import.meta.globEager('./**/*_channel.js')
 
 // Example: Import a stylesheet in app/frontend/index.css
-// import '~/index.css'
+import { createApp } from 'vue';
+import Counter from 'components/Counter.vue';
+
+document.addEventListener('DOMContentLoaded', () => {
+	const app = createApp({});
+	app.component('Counter', Counter);
+	app.mount('#vue-app');
+	console.log('Vue app mounted');
+});
